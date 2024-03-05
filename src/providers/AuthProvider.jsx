@@ -1,7 +1,8 @@
 import { createContext, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import ApiFetcher from "../lib/ApiFetcher";
+import axios from "axios";
+import config from "../lib/config";
 export const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
@@ -9,7 +10,7 @@ export default function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
     const signIn = useCallback(async (user) => {
-        const res = await ApiFetcher.post(`${import.meta.env.VITE_SERVER_URL}/api/user/auth`, user);
+        const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/user/auth`, user, config);
 
         if (res.status !== 200) {
             return;
@@ -20,7 +21,7 @@ export default function AuthProvider({ children }) {
     }, []);
 
     const signUp = useCallback(async (user) => {
-        const res = await ApiFetcher.post(`${import.meta.env.VITE_SERVER_URL}/api/user/sign-up`, user);
+        const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/user/sign-up`, user, config);
 
         if (res.status !== 201) {
             return;
@@ -31,7 +32,7 @@ export default function AuthProvider({ children }) {
     }, [setUser]);
 
     const signOut = useCallback(async () => {
-        const res = await ApiFetcher.get(`${import.meta.env.VITE_SERVER_URL}/api/user/sign-out`);
+        const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/user/sign-out`, config);
 
         if (res.status !== 200) {
             return null;
@@ -43,12 +44,7 @@ export default function AuthProvider({ children }) {
 
     const fetchSession = useCallback(async () => {
         try {
-            const res = await ApiFetcher.get(`${import.meta.env.VITE_SERVER_URL}/api/user/auth`, {
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-                }
-            });
+            const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/user/auth`, config);
             setUser(res.data.user);
 
             return res.data

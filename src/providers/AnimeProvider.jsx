@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { createContext, useCallback } from "react"
-import ApiFetcher from "../lib/ApiFetcher";
+import config from "../lib/config";
+import axios from "axios";
 import { toast } from 'react-hot-toast';
 
 export const AnimeContext = createContext();
@@ -13,17 +14,17 @@ export default function AnimeProvider({ children }) {
             url.searchParams.set('title', title)
         }
 
-        const res = await ApiFetcher.get(url.toString());
+        const res = await axios.get(url.toString(), config);
         return res.data;
     }, [])
 
     const fetchAnime = useCallback(async (id) => {
-        const res = await ApiFetcher.get(`${import.meta.env.VITE_SERVER_URL}/api/anime/${id}`);
+        const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/anime/${id}`, config);
         return res.data;
     }, [])
 
     const editAnime = useCallback(async (anime) => {
-        const res = await ApiFetcher.put(`${import.meta.env.VITE_SERVER_URL}/api/anime/${anime._id}`, anime);
+        const res = await axios.put(`${import.meta.env.VITE_SERVER_URL}/api/anime/${anime._id}`, anime, config);
 
         if (res.status !== 200) {
             return toast.error("Something went wrong", { position: "top-right" })
@@ -32,7 +33,7 @@ export default function AnimeProvider({ children }) {
     }, [])
 
     const deleteAnime = useCallback(async (animeId) => {
-        const res = await ApiFetcher.delete(`${import.meta.env.VITE_SERVER_URL}/api/anime/${animeId}`);
+        const res = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/api/anime/${animeId}`, config);
         if (res.status !== 200) {
             return toast.error("Something went wrong", { position: "top-right" })
         }
@@ -40,7 +41,7 @@ export default function AnimeProvider({ children }) {
     }, [])
 
     const addAnime = useCallback(async (anime) => {
-        const res = await ApiFetcher.post(`${import.meta.env.VITE_SERVER_URL}/api/anime`, anime);
+        const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/anime`, anime,axios);
         if (res.status !== 201) {
             return toast.error("Something went wrong", { position: "top-right" })
         }
