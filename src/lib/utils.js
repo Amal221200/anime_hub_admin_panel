@@ -1,0 +1,1 @@
+export const capitalize = (string) => string != null ? `${string[0].toUpperCase()}${string.slice(1)}` : ''
