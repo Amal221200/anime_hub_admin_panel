@@ -15,7 +15,7 @@ export default function AuthProvider({ children }) {
             return;
         }
 
-        setUser(res.data)
+        setUser(res.data.user)
         toast.success("Signed In scuccessfully")
     }, []);
 
@@ -26,7 +26,7 @@ export default function AuthProvider({ children }) {
             return;
         }
 
-        setUser(res.data);
+        setUser(res.data.user);
         toast.success("Signed Up scuccessfully")
     }, [setUser]);
 
@@ -44,7 +44,8 @@ export default function AuthProvider({ children }) {
     const fetchSession = useCallback(async () => {
         try {
             const res = await ApiFetcher.get(`${import.meta.env.VITE_SERVER_URL}/api/user/auth`);
-            setUser(res.data);
+            setUser(res.data.user);
+                        
             return res.data
         } catch (error) {
             if (error.response.status === 401) {
