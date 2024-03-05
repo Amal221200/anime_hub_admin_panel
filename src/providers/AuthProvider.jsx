@@ -16,7 +16,7 @@ export default function AuthProvider({ children }) {
             return;
         }
 
-        setUser(res.data.user)
+        setUser(res.data)
         toast.success("Signed In scuccessfully")
     }, []);
 
@@ -27,7 +27,7 @@ export default function AuthProvider({ children }) {
             return;
         }
 
-        setUser(res.data.user);
+        setUser(res.data);
         toast.success("Signed Up scuccessfully")
     }, [setUser]);
 
