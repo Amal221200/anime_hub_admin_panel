@@ -43,9 +43,7 @@ export default function AuthProvider({ children }) {
 
     const fetchSession = useCallback(async () => {
         try {
-            const res = await ApiFetcher.get(`${import.meta.env.VITE_SERVER_URL}/api/user/auth`);
-
-
+            const res = await ApiFetcher.get(`/api/user/auth`);
             setUser(res.data);
             return res.data
         } catch (error) {
