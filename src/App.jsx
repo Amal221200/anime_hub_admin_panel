@@ -1,9 +1,9 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import MainLayout from "./layout/MainLayout";
 import { lazy, Suspense } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MainLayout from "./layout/MainLayout";
 import AuthLayout from "./layout/AuthLayout";
 
+const HomePage = lazy(() => import("./pages/HomePage"));
 const SignInPage = lazy(() => import("./pages/SignInPage"));
 const EditAnimePage = lazy(() => import("./pages/EditAnimePage"));
 const AddAnimePage = lazy(() => import("./pages/AddAnimePage"));
@@ -16,7 +16,11 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/sign-in",
-                element: <Suspense><SignInPage /></Suspense>
+                element: (
+                    <Suspense>
+                        <SignInPage />
+                    </Suspense>
+                )
             },
             {
                 path: "/",
@@ -24,30 +28,26 @@ const router = createBrowserRouter([
                 children: [
                     {
                         path: "/",
-                        element: <HomePage />
+                        element: (
+                            <HomePage />
+                        )
                     },
                     {
                         path: "/anime",
                         element: (
-                            <Suspense>
-                                <AddAnimePage />
-                            </Suspense>
+                            <AddAnimePage />
                         )
                     },
                     {
                         path: "/anime/:id",
                         element: (
-                            <Suspense>
-                                <EditAnimePage />
-                            </Suspense>
+                            <EditAnimePage />
                         )
                     },
                     {
                         path: "/merchandise",
                         element: (
-                            <Suspense>
-                                <MerchandisePage />
-                            </Suspense>
+                            <MerchandisePage />
                         )
                     },
                 ]

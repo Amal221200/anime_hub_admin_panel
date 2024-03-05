@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState, lazy, Suspense } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AnimeContext } from "../providers/AnimeProvider";
 import { AuthContext } from "../providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { capitalize } from "../lib/utils";
 import AddButton from "../components/AddButton";
-
-const AnimeCard = lazy(() => import('../components/AnimeCard'));
+import AnimeCard from "../components/AnimeCard";
 
 export default function HomePage() {
   const [animes, setAnimes] = useState(null);
@@ -25,12 +24,12 @@ export default function HomePage() {
       <section className="mt-5">
         <h1 className="text-2xl text-center">Welcome Back <span className="font-bold">{capitalize(user?.username)}</span>!</h1>
       </section>
-      <section className="grid items-center justify-center gap-3 my-10 lg:grid-cols-3 sm:grid-cols-2 ">
+      <section className="grid items-center justify-center gap-3 my-10 lg:grid-cols-3 sm:grid-cols-2">
         {
           animes?.map((anime) => (
-            <Suspense key={anime._id}>
-              <AnimeCard anime={anime} />
-            </Suspense>
+            // <Suspense >
+            <AnimeCard key={anime._id} anime={anime} />
+            // </Suspense>
           ))
         }
       </section>

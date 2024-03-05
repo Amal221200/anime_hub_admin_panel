@@ -11,10 +11,12 @@ export default function MainLayout() {
     return (
         <AnimeProvider>
             <PopupProvider>
-                <div className="max-w-[80vw] mx-auto">
-                    <Outlet />
+                <div className="w-[80vw] mx-auto">
+                    <Suspense>
+                        <Outlet />
+                    </Suspense>
                 </div>
-                
+
                 <Suspense>
                     <AddPopup />
                     <DeletePopup />
