@@ -8,22 +8,22 @@ export const AnimeContext = createContext();
 export default function AnimeProvider({ children }) {
 
     const fetchAnimes = useCallback(async (title) => {
-        const url = new URL(`/api/anime`, import.meta.env.VITE_SERVER_URL);
+        const url = new URL(`${import.meta.env.VITE_SERVER_URL}/api/anime`);
         if (title) {
             url.searchParams.set('title', title)
         }
 
-        const res = await ApiFetcher.get(url.pathname);
+        const res = await ApiFetcher.get(url.toString());
         return res.data;
     }, [])
 
     const fetchAnime = useCallback(async (id) => {
-        const res = await ApiFetcher.get(`/api/anime/${id}`);
+        const res = await ApiFetcher.get(`${import.meta.env.VITE_SERVER_URL}/api/anime/${id}`);
         return res.data;
     }, [])
 
     const editAnime = useCallback(async (anime) => {
-        const res = await ApiFetcher.put(`/api/anime/${anime._id}`, anime);
+        const res = await ApiFetcher.put(`${import.meta.env.VITE_SERVER_URL}/api/anime/${anime._id}`, anime);
 
         if (res.status !== 200) {
             return toast.error("Something went wrong", { position: "top-right" })
@@ -32,7 +32,7 @@ export default function AnimeProvider({ children }) {
     }, [])
 
     const deleteAnime = useCallback(async (animeId) => {
-        const res = await ApiFetcher.delete(`/api/anime/${animeId}`);
+        const res = await ApiFetcher.delete(`${import.meta.env.VITE_SERVER_URL}/api/anime/${animeId}`);
         if (res.status !== 200) {
             return toast.error("Something went wrong", { position: "top-right" })
         }
@@ -40,7 +40,7 @@ export default function AnimeProvider({ children }) {
     }, [])
 
     const addAnime = useCallback(async (anime) => {
-        const res = await ApiFetcher.post(`/api/anime`, anime);
+        const res = await ApiFetcher.post(`${import.meta.env.VITE_SERVER_URL}/api/anime`, anime);
         if (res.status !== 201) {
             return toast.error("Something went wrong", { position: "top-right" })
         }
