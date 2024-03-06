@@ -103,7 +103,7 @@ const EditAnimePage = () => {
                             <label htmlFor="episodeDuration" className='font-bold text-md'>Episode Duration</label>
                             <input type="number" required id='episodeDuration' name='episodeDuration' className='px-2 py-1 border border-gray-600 rounded' defaultValue={anime?.episodeDuration} />
                         </div>
-                        <div className='flex items-center gap-3 my-2'>
+                        <div className="flex flex-wrap-reverse items-center gap-3 my-2">
                             <input type="hidden" name="imageURL" value={imageURL} required />
                             <input type="file" required id='imageLink' disabled={uploading} name='imageLink' onInput={handleFileInput} className='hidden'  />
 
@@ -112,7 +112,7 @@ const EditAnimePage = () => {
                                 <span className="px-2 py-1 border border-gray-600 rounded cursor-pointer">Image Link</span>
                             </label>
                             {
-                                imageURL && <img src={imageURL} alt="" className="w-[200px]" />
+                                imageURL && <img src={imageURL} alt="" className="w-[100%] max-w-[180px] mx-auto" />
                             }
                         </div>
                         <div className='flex flex-col justify-center gap-1 my-2'>
