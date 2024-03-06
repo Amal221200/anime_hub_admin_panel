@@ -41,10 +41,12 @@ export default function AnimeProvider({ children }) {
     }, [])
 
     const addAnime = useCallback(async (anime) => {
-        const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/anime`, anime,axios);
+        const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/anime`, anime, config);
+       
         if (res.status !== 201) {
             return toast.error("Something went wrong", { position: "top-right" })
         }
+
         toast.success("Anime successfully added", { position: "top-right" })
     }, [])
 

@@ -46,7 +46,7 @@ export default function AuthProvider({ children }) {
     const fetchSession = useCallback(async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/user/auth`, config);
-            setUser(res.data.user);
+            setUser(res.data);
 
             return res.data
         } catch (error) {

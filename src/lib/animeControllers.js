@@ -7,8 +7,17 @@ export const fetchAnimes = async (title) => {
     if (title) {
         url.searchParams.set('title', title)
     }
-    
+
     const res = await axios.get(url.toString(), config);
+    return res.data;
+}
+
+export const uploadFile = async (file) => {
+    const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/upload`, { image: file }, {
+        headers: {
+            'Content-Type': "multipart/form-data"
+        }
+    })
     return res.data;
 }
 
@@ -31,6 +40,7 @@ export const deleteAnime = async (animeId) => {
     if (res.status !== 200) {
         return toast.error("Something went wrong", { position: "top-right" })
     }
+
     toast.success("Anime successfully deleted", { position: "top-right" })
 }
 
@@ -39,5 +49,6 @@ export const addAnime = async (anime) => {
     if (res.status !== 201) {
         return toast.error("Something went wrong", { position: "top-right" })
     }
+
     toast.success("Anime successfully added", { position: "top-right" })
 }

@@ -9,7 +9,7 @@ import AnimeCard from "../components/AnimeCard";
 export default function HomePage() {
   const [animes, setAnimes] = useState(null);
   const { fetchAnimes } = useContext(AnimeContext);
-  const { user, fetchSession } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function HomePage() {
       const data = await fetchAnimes();
       setAnimes(data);
     })()
-  }, [fetchAnimes, navigate, fetchSession])
+  }, [fetchAnimes, navigate])
 
   return (
     <main className="relative">
@@ -27,9 +27,7 @@ export default function HomePage() {
       <section className="grid items-center justify-center gap-3 my-10 lg:grid-cols-3 sm:grid-cols-2">
         {
           animes?.map((anime) => (
-            // <Suspense >
             <AnimeCard key={anime._id} anime={anime} />
-            // </Suspense>
           ))
         }
       </section>

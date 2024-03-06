@@ -3,27 +3,46 @@ import { useParams, useNavigate } from "react-router-dom";
 import { AnimeContext } from "../providers/AnimeProvider";
 import { PopupContext } from "../providers/PopupProvider";
 import { AuthContext } from "../providers/AuthProvider";
+import { toast } from "react-hot-toast";
 import GoBack from "../components/GoBack";
+import { uploadFile } from "../lib/animeControllers";
 
 const EditAnimePage = () => {
     const { id: animeId } = useParams();
+    const [uploading, setUploading] = useState(false);
     const navigate = useNavigate();
     const { fetchAnime } = useContext(AnimeContext);
     const [anime, setAnime] = useState(null)
     const { onEditOpen } = useContext(PopupContext);
     const { user } = useContext(AuthContext);
+    const [imageURL, setImageURL] = useState('')
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formmData = new FormData(e.target);
-        const newAnime = { ...Object.fromEntries(formmData.entries()), genre: formmData.get("genre").split(", "), _id: animeId }
+        const formData = new FormData(e.target);
+        const newAnime = { ...Object.fromEntries(formData.entries()), genre: formData.get("genre").split(", "), _id: animeId, imageLink: formData.get("imageURL") }
         onEditOpen(newAnime)
+    }
+
+    const handleFileInput = async (e) => {
+        if (e.target.files.length === 0) {
+            setImageURL(anime.imageLink);
+            return null
+        }
+        setUploading(true);
+        const file = e.target.files[0];
+        const url = await uploadFile(file)
+        setImageURL(url)
+        toast.success("Image Uploaded");
+        setUploading(false);
     }
 
     useEffect(() => {
         (async () => {
             const data = await fetchAnime(animeId)
             setAnime(data);
+
+            setImageURL(data.imageLink)
         })()
         return () => {
             setAnime(null)
@@ -84,9 +103,17 @@ const EditAnimePage = () => {
                             <label htmlFor="episodeDuration" className='font-bold text-md'>Episode Duration</label>
                             <input type="number" required id='episodeDuration' name='episodeDuration' className='px-2 py-1 border border-gray-600 rounded' defaultValue={anime?.episodeDuration} />
                         </div>
-                        <div className='flex flex-col justify-center gap-1 my-2'>
-                            <label htmlFor="imageLink" className='font-bold text-md'>Image Link</label>
-                            <input type="text" required id='imageLink' name='imageLink' className='px-2 py-1 border border-gray-600 rounded' defaultValue={anime?.imageLink} />
+                        <div className='flex items-center gap-3 my-2'>
+                            <input type="hidden" name="imageURL" value={imageURL} required />
+                            <input type="file" required id='imageLink' disabled={uploading} name='imageLink' onInput={handleFileInput} className='hidden'  />
+
+                            {/* Visible Elements */}
+                            <label htmlFor="imageLink" className='font-bold text-md'>
+                                <span className="px-2 py-1 border border-gray-600 rounded cursor-pointer">Image Link</span>
+                            </label>
+                            {
+                                imageURL && <img src={imageURL} alt="" className="w-[200px]" />
+                            }
                         </div>
                         <div className='flex flex-col justify-center gap-1 my-2'>
                             <label htmlFor="watchLink" className='font-bold text-md'>Watch Link</label>
@@ -101,7 +128,7 @@ const EditAnimePage = () => {
                     </div>
                 </div>
                 <div className='flex items-center gap-2 mt-5 justify-evenly'>
-                    <button className='inline-flex justify-center px-4 py-2 text-sm font-medium border border-transparent rounded-md bg-emerald-100 text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2' type='submit'>Edit</button>
+                    <button className='inline-flex justify-center px-4 py-2 text-sm font-medium border border-transparent rounded-md bg-emerald-100 text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed' disabled={uploading} type='submit'>Edit</button>
                 </div>
             </form>
         </main>

@@ -1,15 +1,33 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { PopupContext } from "../providers/PopupProvider";
 import GoBack from "../components/GoBack";
+import {toast} from "react-hot-toast";
+import { uploadFile } from "../lib/animeControllers";
 
 export default function AddAnimePage() {
+    const [imageURL, setImageURL] = useState('')
+    const [uploading, setUploading] = useState(false)
     const { onAddOpen } = useContext(PopupContext);
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const newAnime = { ...Object.fromEntries(formData.entries()), genre: formData.get('genre').split(", ") }
+        const newAnime = { ...Object.fromEntries(formData.entries()), genre: formData.get('genre').split(", "), imageLink: formData.get("imageURL") }
         onAddOpen(newAnime)
     };
+
+    const handleFileInput = async (e) => {
+        if (e.target.files.length === 0) {
+            setImageURL('')
+            return null
+        }
+        setUploading(true)
+        const file = e.target.files[0];
+        const url = await uploadFile(file)
+        setImageURL(url)
+        toast.success("Image Uploaded");
+        setUploading(false)
+    }
+
 
     return (
         <main>
@@ -62,9 +80,17 @@ export default function AddAnimePage() {
                             <label htmlFor="episodeDuration" className='font-bold text-md'>Episode Duration</label>
                             <input type="number" required id='episodeDuration' name='episodeDuration' className='px-2 py-1 border border-gray-600 rounded' />
                         </div>
-                        <div className='flex flex-col justify-center gap-1 my-2'>
-                            <label htmlFor="imageLink" className='font-bold text-md'>Image Link</label>
-                            <input type="text" required id='imageLink' name='imageLink' className='px-2 py-1 border border-gray-600 rounded' />
+                        <div className='flex items-center gap-3 my-2'>
+                            <input type="hidden" name="imageURL" value={imageURL} required />
+                            <input type="file" required id='imageLink' name='imageLink' disabled={uploading} onInput={handleFileInput} className='hidden' />
+
+                            {/* Visible Elements */}
+                            <label htmlFor="imageLink" className='font-bold text-md'>
+                                <span className="px-2 py-1 border border-gray-600 rounded cursor-pointer">Image Link</span>
+                            </label>
+                            {
+                                imageURL && <img src={imageURL} alt="" className="w-[200px]" />
+                            }
                         </div>
                         <div className='flex flex-col justify-center gap-1 my-2'>
                             <label htmlFor="watchLink" className='font-bold text-md'>Watch Link</label>
@@ -79,7 +105,7 @@ export default function AddAnimePage() {
                     </div>
                 </div>
                 <div className='flex items-center gap-2 mt-5 justify-evenly'>
-                    <button className='inline-flex justify-center px-4 py-2 text-sm font-medium text-orange-900 bg-orange-100 border border-transparent rounded-md hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2' type='submit'>Add</button>
+                    <button className='inline-flex justify-center px-4 py-2 text-sm font-medium text-orange-900 bg-orange-100 border border-transparent rounded-md hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed' disabled={uploading} type='submit'>Add</button>
                 </div>
             </form>
         </main>
