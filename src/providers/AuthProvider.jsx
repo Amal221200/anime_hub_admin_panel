@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import config from "../lib/config";
+
 export const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
