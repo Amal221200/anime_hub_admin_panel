@@ -103,16 +103,16 @@ const EditAnimePage = () => {
                         </div>
                         <div className="flex flex-wrap-reverse items-center gap-3 my-2">
                             <input type="hidden" name="imageURL" value={imageURL} required />
-                            <input type="file" required id='imageLink' disabled={uploading} name='imageLink' onInput={handleFileInput} className='hidden' />
+                            <input type="file" id='imageLink' disabled={uploading} name='imageLink' onInput={handleFileInput} className='hidden' />
 
                             {/* Visible Elements */}
-                            <label htmlFor="imageLink" className='font-bold text-md flex gap-2'>
-                                <span className="px-2 py-1 border border-gray-600 rounded transition-colors hover:bg-black/10 cursor-pointer">
+                            <label htmlFor="imageLink" className='flex gap-2 font-bold text-md'>
+                                <span className="px-2 py-1 transition-colors border border-gray-600 rounded cursor-pointer hover:bg-black/10">
                                     Image Link
                                 </span>
                                 
                                 {/* Spinner */}
-                                {uploading && <div className="h-5 w-5 border border-black border-r-0 border-b-0 rounded-full animate-spin-fast" />}
+                                {uploading && <div className="w-5 h-5 border border-b-0 border-r-0 border-black rounded-full animate-spin-fast" />}
                             </label>
                             {
                                 imageURL && <img src={imageURL} alt="" className="max-w-[180px] mx-auto rounded" />
