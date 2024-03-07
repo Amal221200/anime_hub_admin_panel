@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { PopupContext } from "../providers/PopupProvider";
 import GoBack from "../components/GoBack";
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { uploadFile } from "../lib/animeControllers";
 
 export default function AddAnimePage() {
@@ -80,16 +80,18 @@ export default function AddAnimePage() {
                             <label htmlFor="episodeDuration" className='font-bold text-md'>Episode Duration</label>
                             <input type="number" required id='episodeDuration' name='episodeDuration' className='px-2 py-1 border border-gray-600 rounded' />
                         </div>
-                        <div className='flex items-center gap-3 my-2'>
+                        <div className='flex flex-wrap-reverse items-center gap-3 my-2'>
                             <input type="hidden" name="imageURL" value={imageURL} required />
                             <input type="file" required id='imageLink' name='imageLink' disabled={uploading} onInput={handleFileInput} className='hidden' />
 
                             {/* Visible Elements */}
                             <label htmlFor="imageLink" className='font-bold text-md'>
-                                <span className="px-2 py-1 border border-gray-600 rounded cursor-pointer">Image Link</span>
+                                <span className="px-2 py-1 border border-gray-600 rounded transition-colors hover:bg-black/10 cursor-pointer">
+                                    Image Link
+                                </span>
                             </label>
                             {
-                                imageURL && <img src={imageURL} alt="" className="w-[200px]" />
+                                imageURL && <img src={imageURL} alt="" className="max-w-[180px] mx-auto rounded" />
                             }
                         </div>
                         <div className='flex flex-col justify-center gap-1 my-2'>

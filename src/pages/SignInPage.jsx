@@ -1,21 +1,29 @@
-import { useContext } from "react";
-import {  useNavigate } from "react-router-dom"
+import { useCallback, useContext } from "react";
+import { useNavigate } from "react-router-dom"
+import { signIn } from "../lib/authControllers";
+import { toast } from "react-hot-toast";
 import { AuthContext } from "../providers/AuthProvider";
 
 const SignInPage = () => {
     const navigate = useNavigate();
-    const { signIn } = useContext(AuthContext);
 
-    const handleSubmit = (e) => {
+    const { fetchSession } = useContext(AuthContext);
+
+    const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const username = formData.get("username");
         const password = formData.get("password");
 
-        signIn({ username, password }).then(() => {
-            navigate(-1);
-        });
-    }
+        const res = await signIn({ username, password });
+        if (!res) {
+            toast.error("Something went wrong");
+            return;
+        }
+        await fetchSession()
+        toast.success("Signed In");
+        navigate("/");
+    }, [fetchSession, navigate])
 
     return (
 
@@ -32,7 +40,7 @@ const SignInPage = () => {
                         <input type="password" name="password" id="password" className="w-full px-2 py-1 rounded outline-none" placeholder="Password" required />
                     </div>
                     <button type="submit" className="py-1 text-white transition rounded bg-slate-800 hover:bg-zinc-950">Submit</button>
-                    
+
                 </form>
             </main>
         </section>

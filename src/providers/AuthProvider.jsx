@@ -10,38 +10,7 @@ export const AuthContext = createContext();
 export default function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
-    const signIn = useCallback(async (user) => {
-        const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/user/auth`, user, config);
-
-        if (res.status !== 200) {
-            return;
-        }
-
-        setUser(res.data)
-        toast.success("Signed In scuccessfully")
-    }, []);
-
-    const signUp = useCallback(async (user) => {
-        const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/user/sign-up`, user, config);
-
-        if (res.status !== 201) {
-            return;
-        }
-
-        setUser(res.data);
-        toast.success("Signed Up scuccessfully")
-    }, [setUser]);
-
-    const signOut = useCallback(async () => {
-        const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/user/sign-out`, config);
-
-        if (res.status !== 200) {
-            return null;
-        }
-
-        setUser(null);
-        toast.success("Signed Out scuccessfully")
-    }, []);
+    
 
     const fetchSession = useCallback(async () => {
         try {
@@ -64,7 +33,7 @@ export default function AuthProvider({ children }) {
     }, [fetchSession])
 
     return (
-        <AuthContext.Provider value={{ user, signUp, signIn, signOut, fetchSession }}>
+        <AuthContext.Provider value={{ user, fetchSession }}>
             {children}
         </AuthContext.Provider>
     )

@@ -1,14 +1,13 @@
 import { useContext, useEffect, useState } from "react"
-import { AnimeContext } from "../providers/AnimeProvider";
 import { AuthContext } from "../providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { capitalize } from "../lib/utils";
 import AddButton from "../components/AddButton";
 import AnimeCard from "../components/AnimeCard";
+import { fetchAnimes } from "../lib/animeControllers";
 
 export default function HomePage() {
   const [animes, setAnimes] = useState(null);
-  const { fetchAnimes } = useContext(AnimeContext);
   const { user } = useContext(AuthContext)
   const navigate = useNavigate();
 
@@ -17,7 +16,7 @@ export default function HomePage() {
       const data = await fetchAnimes();
       setAnimes(data);
     })()
-  }, [fetchAnimes, navigate])
+  }, [navigate])
 
   return (
     <main className="relative">

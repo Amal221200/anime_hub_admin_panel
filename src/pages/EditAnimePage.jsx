@@ -1,17 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { AnimeContext } from "../providers/AnimeProvider";
 import { PopupContext } from "../providers/PopupProvider";
 import { AuthContext } from "../providers/AuthProvider";
 import { toast } from "react-hot-toast";
 import GoBack from "../components/GoBack";
-import { uploadFile } from "../lib/animeControllers";
+import { fetchAnime, uploadFile } from "../lib/animeControllers";
 
 const EditAnimePage = () => {
     const { id: animeId } = useParams();
     const [uploading, setUploading] = useState(false);
     const navigate = useNavigate();
-    const { fetchAnime } = useContext(AnimeContext);
     const [anime, setAnime] = useState(null)
     const { onEditOpen } = useContext(PopupContext);
     const { user } = useContext(AuthContext);
@@ -47,7 +45,7 @@ const EditAnimePage = () => {
         return () => {
             setAnime(null)
         }
-    }, [animeId, fetchAnime, navigate, user])
+    }, [animeId, navigate, user])
 
     if (!anime)
         return
@@ -105,14 +103,16 @@ const EditAnimePage = () => {
                         </div>
                         <div className="flex flex-wrap-reverse items-center gap-3 my-2">
                             <input type="hidden" name="imageURL" value={imageURL} required />
-                            <input type="file" required id='imageLink' disabled={uploading} name='imageLink' onInput={handleFileInput} className='hidden'  />
+                            <input type="file" required id='imageLink' disabled={uploading} name='imageLink' onInput={handleFileInput} className='hidden' />
 
                             {/* Visible Elements */}
                             <label htmlFor="imageLink" className='font-bold text-md'>
-                                <span className="px-2 py-1 border border-gray-600 rounded cursor-pointer">Image Link</span>
+                                <span className="px-2 py-1 border border-gray-600 rounded transition-colors hover:bg-black/10 cursor-pointer">
+                                    Image Link
+                                </span>
                             </label>
                             {
-                                imageURL && <img src={imageURL} alt="" className="w-[100%] max-w-[180px] mx-auto" />
+                                imageURL && <img src={imageURL} alt="" className="max-w-[180px] mx-auto rounded" />
                             }
                         </div>
                         <div className='flex flex-col justify-center gap-1 my-2'>

@@ -1,12 +1,10 @@
 /* eslint-disable react/prop-types */
-import { createContext, useCallback, useContext, useState } from "react";
-import { AnimeContext } from "./AnimeProvider";
-
+import { createContext, useCallback, useState } from "react";
+import { editAnime as editAnimeFunc, deleteAnime as deleteAnimeFunc, addAnime as addAnimeFunc } from "../lib/animeControllers"
 
 export const PopupContext = createContext();
 
 export default function PopupProvider({ children }) {
-    const { editAnime: editAnimeFunc, deleteAnime: deleteAnimeFunc, addAnime: addAnimeFunc } = useContext(AnimeContext)
     const [editAnime, setEditAnime] = useState(null);
     const [editPopup, setEditPopup] = useState(false);
     const [addAnime, setAddAnime] = useState(null);
@@ -26,7 +24,7 @@ export default function PopupProvider({ children }) {
                 setEditAnime(null);
             });
         }
-    }, [editAnimeFunc, editAnime])
+    }, [editAnime])
     const onAddOpen = useCallback((anime) => {
         setAddPopup(true);
         setAddAnime(anime);
@@ -39,7 +37,7 @@ export default function PopupProvider({ children }) {
                 setAddAnime(null);
             });
         }
-    }, [addAnimeFunc, addAnime])
+    }, [addAnime])
 
     const onDeleteOpen = useCallback((anime) => {
         setDeletePopup(true);
@@ -53,7 +51,7 @@ export default function PopupProvider({ children }) {
                 setDeleteAnime(null);
             });
         }
-    }, [deleteAnimeFunc, deleteAnime])
+    }, [deleteAnime])
 
     return (
         <PopupContext.Provider value={{ deleteAnime, editAnime, onDeleteClose, onDeleteOpen, onEditClose, onEditOpen, editPopup, deletePopup, addAnime, addPopup, onAddClose, onAddOpen }}>

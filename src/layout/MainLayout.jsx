@@ -1,6 +1,5 @@
 import { Suspense, lazy } from "react";
 import { Outlet } from "react-router-dom";
-import AnimeProvider from "../providers/AnimeProvider";
 import PopupProvider from "../providers/PopupProvider";
 
 const AddPopup = lazy(() => import('../components/AddPopup'))
@@ -9,20 +8,17 @@ const DeletePopup = lazy(() => import("../components/DeletePopup.jsx"))
 
 export default function MainLayout() {
     return (
-        <AnimeProvider>
-            <PopupProvider>
-                <div className="w-[80vw] mx-auto">
-                    <Suspense>
-                        <Outlet />
-                    </Suspense>
-                </div>
-
+        <PopupProvider>
+            <div className="w-[80vw] mx-auto">
                 <Suspense>
-                    <AddPopup />
-                    <DeletePopup />
-                    <EditPopup />
+                    <Outlet />
                 </Suspense>
-            </PopupProvider>
-        </AnimeProvider>
+            </div>
+            <Suspense>
+                <AddPopup />
+                <DeletePopup />
+                <EditPopup />
+            </Suspense>
+        </PopupProvider>
     )
 }
