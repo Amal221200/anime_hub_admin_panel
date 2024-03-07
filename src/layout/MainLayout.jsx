@@ -9,7 +9,7 @@ const DeletePopup = lazy(() => import("../components/DeletePopup.jsx"))
 export default function MainLayout() {
     return (
         <PopupProvider>
-            <div className="w-[80vw] mx-auto">
+            <div className="w-[80vw] mx-auto my-4">
                 <Suspense>
                     <Outlet />
                 </Suspense>
