@@ -8,6 +8,7 @@ export default function AddAnimePage() {
     const [imageURL, setImageURL] = useState('')
     const [uploading, setUploading] = useState(false)
     const { onAddOpen } = useContext(PopupContext);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -21,11 +22,16 @@ export default function AddAnimePage() {
             return null
         }
         setUploading(true)
+
         const file = e.target.files[0];
-        const url = await uploadFile(file)
-        if(!url)
+        const url = await uploadFile(file);
+
+        if (!url) {
+            setUploading(false)
+            toast.error("Image Didn't Upload");
             return null;
-        
+        }
+
         setImageURL(url)
         toast.success("Image Uploaded");
         setUploading(false)
@@ -85,7 +91,7 @@ export default function AddAnimePage() {
                         </div>
                         <div className='flex flex-wrap-reverse items-center gap-3 my-2'>
                             <input type="hidden" name="imageURL" value={imageURL} required />
-                            <input type="file" required id='imageLink' name='imageLink' disabled={uploading} onInput={handleFileInput} className='hidden' onInvalid={()=> alert("Please upload an image")} />
+                            <input type="file" required id='imageLink' name='imageLink' disabled={uploading} onInput={handleFileInput} className='hidden' onInvalid={() => alert("Please upload an image")} />
 
                             {/* Visible Elements */}
                             <label htmlFor="imageLink" className='flex gap-2 font-bold text-md'>

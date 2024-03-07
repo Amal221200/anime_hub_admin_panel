@@ -27,9 +27,18 @@ const EditAnimePage = () => {
             setImageURL(anime.imageLink);
             return null
         }
+        
         setUploading(true);
+        
         const file = e.target.files[0];
-        const url = await uploadFile(file)
+        const url = await uploadFile(file);
+        
+        if (!url) {
+            setUploading(false)
+            toast.error("Image Didn't Upload");
+            return null;
+        }
+        
         setImageURL(url)
         toast.success("Image Uploaded");
         setUploading(false);
