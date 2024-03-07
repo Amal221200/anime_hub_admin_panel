@@ -25,6 +25,7 @@ export default function PopupProvider({ children }) {
             });
         }
     }, [editAnime])
+
     const onAddOpen = useCallback((anime) => {
         setAddPopup(true);
         setAddAnime(anime);
@@ -54,7 +55,7 @@ export default function PopupProvider({ children }) {
     }, [deleteAnime])
 
     return (
-        <PopupContext.Provider value={{ deleteAnime, editAnime, onDeleteClose, onDeleteOpen, onEditClose, onEditOpen, editPopup, deletePopup, addAnime, addPopup, onAddClose, onAddOpen }}>
+        <PopupContext.Provider value={{ deleteAnime, editAnime, addAnime, editPopup, deletePopup, addPopup, onAddOpen, onAddClose, onDeleteOpen, onDeleteClose, onEditOpen, onEditClose }}>
             {children}
         </PopupContext.Provider>
     )

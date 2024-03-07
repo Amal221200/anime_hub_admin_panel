@@ -1,25 +1,24 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { PopupContext } from "../providers/PopupProvider";
-import { AuthContext } from "../providers/AuthProvider";
 import { toast } from "react-hot-toast";
 import GoBack from "../components/GoBack";
 import { fetchAnime, uploadFile } from "../lib/animeControllers";
 
 const EditAnimePage = () => {
     const { id: animeId } = useParams();
+    
     const [uploading, setUploading] = useState(false);
-    const navigate = useNavigate();
     const [anime, setAnime] = useState(null)
-    const { onEditOpen } = useContext(PopupContext);
-    const { user } = useContext(AuthContext);
     const [imageURL, setImageURL] = useState('')
-
+    
+    const { onEditOpen } = useContext(PopupContext);
+        
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const newAnime = { ...Object.fromEntries(formData.entries()), genre: formData.get("genre").split(", "), _id: animeId, imageLink: formData.get("imageURL") }
-        onEditOpen(newAnime)
+        const newAnime = { ...Object.fromEntries(formData.entries()), genre: formData.get("genre").split(", "), _id: animeId, imageLink: formData.get("imageURL") };
+        onEditOpen(newAnime);
     }
 
     const handleFileInput = async (e) => {
@@ -51,10 +50,11 @@ const EditAnimePage = () => {
 
             setImageURL(data.imageLink)
         })()
+        
         return () => {
             setAnime(null)
         }
-    }, [animeId, navigate, user])
+    }, [animeId])
 
     if (!anime)
         return

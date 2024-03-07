@@ -2,9 +2,9 @@ import { Suspense, lazy } from "react";
 import { Outlet } from "react-router-dom";
 import PopupProvider from "../providers/PopupProvider";
 
-const AddPopup = lazy(() => import('../components/AddPopup'))
-const EditPopup = lazy(() => import("../components/EditPopup.jsx"))
-const DeletePopup = lazy(() => import("../components/DeletePopup.jsx"))
+const AddPopup = lazy(() => import('../components/popup/AddPopup'))
+const EditPopup = lazy(() => import("../components/popup/EditPopup"))
+const DeletePopup = lazy(() => import("../components/popup/DeletePopup"))
 
 export default function MainLayout() {
     return (

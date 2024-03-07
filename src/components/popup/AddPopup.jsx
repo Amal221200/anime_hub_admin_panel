@@ -1,13 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useContext } from 'react'
-import { PopupContext } from "../providers/PopupProvider";
+import { PopupContext } from "../../providers/PopupProvider";
 
-const DeletePopup = () => {
-  const { deletePopup, onDeleteClose, deleteAnime } = useContext(PopupContext)
-
+const AddPopup = () => {
+  const { addPopup, onAddClose, addAnime } = useContext(PopupContext);
+  
   return (
-    <Transition appear show={deletePopup} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={()=> onDeleteClose('close')}>
+    <Transition appear show={addPopup} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={()=> onAddClose('close')}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -32,23 +32,17 @@ const DeletePopup = () => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-rose-900"
-                >
-                  Delete Anime
-                </Dialog.Title>
-                <div className="mt-2">
+              <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Are you sure want to delete <span className='font-bold'>{deleteAnime?.title}</span>?
+                    Are you sure want to add <span className='font-bold'>{addAnime?.title}</span>?
                   </p>
                 </div>
 
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium border border-transparent rounded-md bg-rose-100 text-rose-900 hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
-                    onClick={() => onDeleteClose('delete')}
+                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-orange-900 bg-orange-100 border border-transparent rounded-md hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                    onClick={()=> onAddClose('add')}
                   >
                     Confirm
                   </button>
@@ -62,4 +56,4 @@ const DeletePopup = () => {
   )
 }
 
-export default DeletePopup;
+export default AddPopup

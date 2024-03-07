@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useContext } from 'react'
-import { PopupContext } from "../providers/PopupProvider";
+import { PopupContext } from "../../providers/PopupProvider";
 
 const EditPopup = () => {
   const { editPopup, onEditClose, editAnime } = useContext(PopupContext);

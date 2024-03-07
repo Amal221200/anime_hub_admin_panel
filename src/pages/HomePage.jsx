@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react"
 import { AuthContext } from "../providers/AuthProvider";
 import { Search } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { capitalize } from "../lib/utils";
 import AddButton from "../components/AddButton";
 import AnimeCard from "../components/AnimeCard";
@@ -9,8 +8,7 @@ import { fetchAnimes } from "../lib/animeControllers";
 
 export default function HomePage() {
   const [animes, setAnimes] = useState(null);
-  const { user } = useContext(AuthContext)
-  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   const handleSearch = useCallback(async (e) => {
     e.preventDefault();
@@ -24,7 +22,7 @@ export default function HomePage() {
       const data = await fetchAnimes();
       setAnimes(data);
     })()
-  }, [navigate])
+  }, [])
 
   if(!animes) 
     return null
