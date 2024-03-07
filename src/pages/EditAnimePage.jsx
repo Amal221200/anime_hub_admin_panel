@@ -106,10 +106,13 @@ const EditAnimePage = () => {
                             <input type="file" required id='imageLink' disabled={uploading} name='imageLink' onInput={handleFileInput} className='hidden' />
 
                             {/* Visible Elements */}
-                            <label htmlFor="imageLink" className='font-bold text-md'>
+                            <label htmlFor="imageLink" className='font-bold text-md flex gap-2'>
                                 <span className="px-2 py-1 border border-gray-600 rounded transition-colors hover:bg-black/10 cursor-pointer">
                                     Image Link
                                 </span>
+                                
+                                {/* Spinner */}
+                                {uploading && <div className="h-5 w-5 border border-black border-r-0 border-b-0 rounded-full animate-spin-fast" />}
                             </label>
                             {
                                 imageURL && <img src={imageURL} alt="" className="max-w-[180px] mx-auto rounded" />
