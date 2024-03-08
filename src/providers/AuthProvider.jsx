@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { createContext, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -6,7 +7,7 @@ import config from "../lib/config";
 
 export const AuthContext = createContext();
 
-// eslint-disable-next-line react/prop-types
+
 export default function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
