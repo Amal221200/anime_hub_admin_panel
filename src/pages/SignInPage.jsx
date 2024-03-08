@@ -27,7 +27,7 @@ const SignInPage = () => {
 
     return (
 
-        <section className="grid w-full h-full place-content-center">
+        <section className="grid w-full min-h-[100dvh] place-content-center">
             <main className="p-4 border border-gray-500 rounded-md w-auth-width">
                 <form className="flex flex-col gap-3 text-center " onSubmit={handleSubmit}>
                     <h1 className="text-4xl font-bold">Login</h1>
