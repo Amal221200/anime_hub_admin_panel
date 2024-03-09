@@ -31,14 +31,14 @@ export default function HomePage() {
     <main className="relative">
       <section className="mt-5">
         <h1 className="text-2xl text-center">Welcome Back <span className="font-bold">{capitalize(user?.username)}</span>!</h1>
-        <form onSubmit={handleSearch} className="flex justify-between items-center mx-auto mt-4 max-w-[50vw] rounded-full bg-white">
+        <form onSubmit={handleSearch} className="flex justify-between items-center mx-auto mt-4 lg:w-[50dvw] sm:w-[60dvw] w-[70dvw] rounded-full bg-white">
           <input type="text" name="search" id="search" placeholder="Search anime" className="w-[90%] px-3 py-2 rounded-full outline-none" />
           <button type="submit">
             <Search size={18} className="mr-2" />
           </button>
         </form>
       </section>
-      <section className="grid items-center justify-center gap-3 my-10 lg:grid-cols-3 sm:grid-cols-2">
+      <section className="grid items-center justify-center gap-3 my-10 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1">
         {
          animes.length === 0 ?(
           <h3>No such anime</h3>
