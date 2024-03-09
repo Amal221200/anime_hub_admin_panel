@@ -21,7 +21,7 @@ export default function AuthProvider({ children }) {
             return res.data
         } catch (error) {
             if (error.response.status === 401) {
-                navigate("/sign-in")
+                navigate("/auth/sign-in")
                 toast.error("Unauthenticated")
                 setUser(null);
             }
