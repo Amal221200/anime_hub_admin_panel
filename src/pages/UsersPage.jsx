@@ -7,10 +7,12 @@ import UserTable from "../components/user/UserTable";
 function UsersPage() {
     const [users, setUsers] = useState(null)
     const [rerender, setRerender] = useState(false)
-    
-    const handleSearch = useCallback((e) => {
+
+    const handleSearch = useCallback(async (e) => {
         e.preventDefault();
-        // const formData = new FormData(e.target);
+        const formData = new FormData(e.target);
+        const userData = await fetchAllUser(formData.get("search"));
+        setUsers(userData);
     }, [])
 
 
@@ -33,7 +35,7 @@ function UsersPage() {
                     </button>
                 </form>
             </section>
-            
+
             <UserTable users={users} setRerender={setRerender} />
         </main>
     )
