@@ -8,12 +8,13 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const EditAnimePage = lazy(() => import("./pages/EditAnimePage"));
 const AddAnimePage = lazy(() => import("./pages/AddAnimePage"));
 const MerchandisePage = lazy(() => import("./pages/MerchandisePage"));
+const UsersPage = lazy(() => import("./pages/UsersPage"));
 
 const router = createBrowserRouter([
     {
         path: "/auth",
         element: <AuthLayout />,
-        
+
         children: [
             {
                 path: "/auth/sign-in",
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
             {
                 path: "/anime/:id",
                 element: <EditAnimePage />
+            },
+            {
+                path: "/users",
+                element: <UsersPage />
             },
             {
                 path: "/merchandise",

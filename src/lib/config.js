@@ -1,1 +1,2 @@
-export default  { withCredentials: true };
+const config = { withCredentials: true }
+export default config;

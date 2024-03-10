@@ -1,7 +1,8 @@
 import { Suspense, lazy } from "react";
-import { Outlet } from "react-router-dom";
+import {  Outlet } from "react-router-dom";
 import PopupProvider from "../providers/PopupProvider";
 import AuthProvider from "../providers/AuthProvider";
+import Header from "../components/Header";
 
 const AddPopup = lazy(() => import('../components/popup/AddPopup'))
 const EditPopup = lazy(() => import("../components/popup/EditPopup"))
@@ -12,6 +13,7 @@ export default function MainLayout() {
         <AuthProvider>
             <PopupProvider>
                 <div className="w-[80vw] mx-auto my-4">
+                    <Header />
                     <Suspense>
                         <Outlet />
                     </Suspense>
