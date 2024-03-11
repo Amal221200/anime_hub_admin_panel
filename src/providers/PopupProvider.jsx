@@ -42,7 +42,9 @@ export default function PopupProvider({ children }) {
 
     const onDeleteOpen = useCallback((anime) => {
         setDeletePopup(true);
-        setDeleteAnime(anime);
+        if (anime) {
+            setDeleteAnime(anime);
+        }
     }, [])
 
     const onDeleteClose = useCallback((action) => {
